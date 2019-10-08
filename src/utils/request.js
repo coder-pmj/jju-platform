@@ -62,11 +62,11 @@ const req = axios.create({
 
 // 添加请求拦截器
 req.interceptors.request.use(function (config) {
-    //console.log(config.url)
-    if (config.url == '/login') { //访问登录页
+   // console.log(config.url)
+    if (config.url == '/api/login') { //访问登录页
         // Message('正在登录')
         load.open()
-    } else if (config.url == '/search' || config.url == '/item') {
+    } else if (config.url == '/api/search' || config.url == '/api/item') {
         load2.open()
     }
     // 在发送请求之前做些什么
@@ -94,7 +94,7 @@ req.interceptors.response.use(function (response) {
     load2.close()
     Message({
         type: 'error',
-        message: error.message
+        message: '服务器异常'
     })
     return Promise.reject(error);
 });

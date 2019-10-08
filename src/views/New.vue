@@ -21,7 +21,7 @@
           ref="upload"
           class="upload-demo"
           drag
-          :action="imgs"
+          action="/img/upload/imgs"
           multiple
           :auto-upload="false"
           :before-upload="beforeupload"
@@ -55,7 +55,6 @@ import submitItemApi from "@/api/submitItem";
 export default {
   data() {
     return {
-      imgs: process.env.VUE_APP_BASE_IMG + "/upload/imgs",
       form: {
         title: "",
         item_type: "",
@@ -97,28 +96,41 @@ export default {
     },
     /* 提交 */
     onSubmit(f) {
-      this.$refs[f].validate(v => {
-        if (v) {
-          if (this.form.item_type == "h") {
-            this.add();
-          } else {
-            if (this.$refs.upload._data.uploadFiles.length) {
-              this.$refs.upload.submit();
+      if (this.userAllData.name) {
+        this.$refs[f].validate(v => {
+          if (v) {
+            if (this.form.item_type == "h") {
+              this.add();
             } else {
-              this.$message({
-                type: "error",
-                message: "请上传图片"
-              });
+              if (this.$refs.upload._data.uploadFiles.length) {
+                this.$refs.upload.submit();
+              } else {
+                this.$message({
+                  type: "error",
+                  message: "请上传图片"
+                });
+              }
             }
           }
-        }
-      });
+        });
+      } else {
+        this.$confirm("发布功能需完善个人资料, 是否去完善?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push("/personal");
+          })
+          .catch(() => {});
+      }
     },
     /* 提交数据 */
     add(s) {
       this.arrform = this.form;
+      this.arrform.sno=this.userAllData.sno
       if (this.arrform.block) {
-        this.arrform.user = "";
+        this.arrform.user = `${this.userAllData.name}(匿名)`;
       } else {
         this.arrform.user = this.userAllData.name;
       }

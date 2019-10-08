@@ -7,7 +7,7 @@
         <span style="margin-left:50px;font-weight:800">时间 :</span>
         <span style="font-weight:400;color:#aabbcc">{{it.date}}</span>
         <span style="margin-left:50px;font-weight:800">用户 :</span>
-        <span v-if="it.user" style="font-weight:400;color:#aabbcc">{{it.user}}</span>
+        <span v-if="!it.user.includes('匿名')" style="font-weight:400;color:#aabbcc">{{it.user}}</span>
         <span v-else style="font-weight:400;color:red">匿名</span>
         <el-tooltip content="删除此话题" placement="right-end" effect="light">
           <i
@@ -104,32 +104,44 @@ export default {
       });
     },
     showForm(num, user) {
-      this.$prompt("请输入您的评论", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消"
-      })
-        .then(({ value }) => {
-          this.commentText = value;
-          //更新视图
-          this.ht.forEach(v => {
-            if (v.num == num) {
-              v.comment.push({ user: user, text: value });
-            }
-          });
-          let obj = {
-            num1: num,
-            user: user,
-            text: this.commentText
-          };
-          addCommentApi.addComment(obj).then(res => {
-            this.$message({
-              type: res.data.flag ? "success" : "error",
-              message: res.data.message,
-              duration: 1000
-            });
-          });
+      if (this.userAllData.name) {
+        this.$prompt("请输入您的评论", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消"
         })
-        .catch(() => {});
+          .then(({ value }) => {
+            this.commentText = value;
+            //更新视图
+            this.ht.forEach(v => {
+              if (v.num == num) {
+                v.comment.push({ user: user, text: value });
+              }
+            });
+            let obj = {
+              num1: num,
+              user: user,
+              text: this.commentText
+            };
+            addCommentApi.addComment(obj).then(res => {
+              this.$message({
+                type: res.data.flag ? "success" : "error",
+                message: res.data.message,
+                duration: 1000
+              });
+            });
+          })
+          .catch(() => {});
+      } else {
+        this.$confirm("评论功能需完善个人资料, 是否去完善?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push("/personal");
+          })
+          .catch(() => {});
+      }
     },
     getUserName() {
       //console.log(local.getUser().user)

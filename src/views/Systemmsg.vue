@@ -78,9 +78,11 @@ export default {
           getMsgApi.getMsg().then(res2 => {
             //console.log(res2)
             const resp = res2.data;
-            this.msgArr = resp.data.filter(v => {
-              return (v.user = this.userAllData.name);
-            });
+            this.msgArr = resp.data
+              .filter(v => {
+                return v.sno == this.userAllData.sno;
+              })
+              .reverse();
             /* 筛选未读 */
             this.weiready = this.msgArr.filter(v => {
               return v.flag == "0";
@@ -89,7 +91,7 @@ export default {
             this.yiready = this.msgArr.filter(v => {
               return v.flag == "1";
             });
-            this.msg = this.weiready.reverse();
+            this.msg = this.weiready;
           });
         }
         // console.log(this.userAllData)
@@ -111,7 +113,7 @@ export default {
     },
     /* 删除已读消息 */
     deleteMsg(index, id) {
-     // this.yiready.splice(index, 1);
+      // this.yiready.splice(index, 1);
       delMsgApi.delMsg({ id: id }).then(res => {
         const resp = res.data;
         if (resp.flag) {
@@ -130,10 +132,10 @@ export default {
       deep: true,
       handler(v) {
         if (v) {
-          this.msg = this.weiready.reverse();
+          this.msg = this.weiready;
         } else {
-          this.msg = this.yiready.reverse();
-         // console.log(this.msg);
+          this.msg = this.yiready;
+          // console.log(this.msg);
         }
       }
     }

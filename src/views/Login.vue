@@ -6,7 +6,13 @@
           <h2 style="color:dimgray">九院校园墙</h2>
         </el-form-item>
         <el-form-item label="账户" prop="username">
-          <el-input type="text" v-model="login_form.username" placeholder="请输入您注册时的账号" ref="input1"></el-input>
+          <el-input
+            type="text"
+            v-model="login_form.username"
+            placeholder="请输入您注册时的账号"
+            ref="input1"
+            @keyup.native.enter="login('forms')"
+          ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input
@@ -18,7 +24,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <a href="http://localhost:8801/">管理员登录</a>
+          <a href="http://www.pmj136.top:8801">管理员登录</a>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" plain @click="login('forms')">登录</el-button>
@@ -100,7 +106,6 @@ export default {
 
 <style scoped>
 .wrap {
-  
   background-size: 100%;
   background-repeat: no-repeat;
   position: absolute;

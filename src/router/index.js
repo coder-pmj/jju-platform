@@ -15,7 +15,7 @@ import Systemmsg from '@/views/Systemmsg'
 Vue.use(Router);
 
 export default new Router({
-    //mode: "history",
+    mode: "history",
     // base: process.env.BASE_URL,
     routes: [
         /* 默认打开主页 */

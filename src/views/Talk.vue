@@ -14,11 +14,11 @@
           <span style="margin-left:50px;font-weight:800">时间 :&nbsp;</span>
           <span style="font-weight:400;color:#aabbcc">{{it.date}}</span>
           <span style="margin-left:50px;font-weight:800">用户 :&nbsp;</span>
-          <span v-if="it.user" style="font-weight:400;color:#aabbcc">{{it.user}}</span>
+          <span v-if="!it.user.includes('匿名')" style="font-weight:400;color:#aabbcc">{{it.user}}</span>
           <span v-else style="font-weight:400;color:red">匿名</span>
           <el-tooltip content="删除此话题" placement="right-end" effect="light">
             <i
-              v-if="it.user==userAllData.name"
+              v-if="it.sno==userAllData.sno"
               style="float:right;margin-left:20px;cursor: pointer;outline:none"
               class="el-icon-delete"
               @click="delHT(it.id,it.url,index)"

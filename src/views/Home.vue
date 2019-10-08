@@ -54,7 +54,9 @@
               </span>
               <p>
                 {{it.date}}&nbsp;&nbsp;&nbsp;来自用户:
-                <span style="color:red">{{it.user?it.user:'匿名用户'}}</span>
+                <span
+                  style="color:red"
+                >{{it.user.includes('匿名')?'匿名用户':it.user}}</span>
               </p>
               <div style="text-indent:2em">{{it.content}}</div>
             </div>
@@ -87,7 +89,7 @@
     <!--end item -->
 
     <el-popover placement="bottom-end" title="温馨提示" width="200" trigger="hover" content="注意时间哦，亲">
-        <div class="clock" ref="clock" slot="reference"></div>
+      <div class="clock" ref="clock" slot="reference"></div>
     </el-popover>
   </div>
 </template>
@@ -183,7 +185,7 @@ export default {
         this.userAllData = res.data.data[0];
         // console.log(this.userAllData)
         let ran = Math.random();
-        if (ran < 0.2 && !this.userAllData.name) {
+        if (ran < 0.3 && !this.userAllData.name) {
           this.$confirm("您的个人资料还不完善, 是否去完善?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
@@ -192,7 +194,6 @@ export default {
             .then(() => {
               this.$router.push("/personal");
             })
-            .catch(() => {});
         }
 
         //console.log(this.userAllData);
@@ -365,7 +366,7 @@ export default {
     /* 检测时间盒子位置变化 */
     clockarea(va) {
       //console.log(va);
-      if (va < -340) {
+      if (va < 0) {
         this.$refs.clock.style.position = "fixed";
         this.$refs.clock.style.top = 100 + "px";
         this.$refs.clock.style.right = this.leftWidth + 50 + "px";

@@ -16,7 +16,7 @@
     <el-form-item label="头像">
       <el-upload
         class="avatar-uploader"
-        :action="avatar"
+        action="/img/upload/avatar"
         :show-file-list="false"
         :on-success="success"
       >
@@ -70,7 +70,7 @@ import checkSnoApi from "@/api/checkSno";
 export default {
   data() {
     return {
-      avatar: process.env.VUE_APP_BASE_IMG + "/upload/avatar",
+    
       base: baseAvatar,
       imageUrl: null,
       disName: false,

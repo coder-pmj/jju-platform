@@ -22,7 +22,7 @@
             </span>
             <p>
               {{it.date}}&nbsp;&nbsp;&nbsp;来自用户:
-              <span style="color:red">{{it.user?it.user:'匿名用户'}}</span>
+              <span style="color:red">{{it.user.includes('匿名')?'匿名用户':it.user}}</span>
             </p>
             <div style="text-indent:2em">{{it.content}}</div>
           </div>
@@ -103,7 +103,7 @@ export default {
 
     initData() {
       getDataApi.getdata().then(res => {
-        this.con = res.data.data;
+        this.con = res.data.data.reverse();
         for (let i = 1; i <= this.con.length; i++) {
           this.commentArea.push({ id: i, text: "" });
         }
