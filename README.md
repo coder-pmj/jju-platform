@@ -1,29 +1,18 @@
-# jju-platform
+# 校园墙
 
-## Project setup
+## 项目使用
+## 首先下载依赖包
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 运行
 ```
-npm run serve
+npm run dev
 ```
 
-### Compiles and minifies for production
+### 打包
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 此项目搭建的时候采用前后端分离模式，后端未部署到服务器，如需在网页浏览项目，建议继续git后端源码
